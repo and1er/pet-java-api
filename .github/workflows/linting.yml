@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   super_linter:
-    # https://help.github.com/en/articles/workflow-syntax-for-github-actions
+    # https://github.com/marketplace/actions/super-linter
     name: Super Linter Stage
     runs-on: ubuntu-20.04
     steps:
