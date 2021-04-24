@@ -1,18 +1,6 @@
-# # AWS Environment variables (to pass to Terraform Cloud)
-# variable "aws_access_key" {
-#   type = string
-# }
-# variable "aws_secret_key" {
-#   type = string
-# }
-# variable "aws_default_region" {
-#   type = string
-# }
-
 # Environment variables (without 'TF_VAR_' prefix).
 variable "DEPLOY_PUBLIC_KEY" {
   type = string
-  default = "~/.ssh/id_rsa.pub"
 }
 variable "DEPLOY_PRIVATE_KEY_FILE" {
   type = string
