@@ -1,10 +1,5 @@
-# region is set via env var AWS_DEFAULT_REGION
-provider "aws" {
-    # TODO: read these parameters from env for Terraform cloud
-#   access_key = "${var.aws_access_key}"
-#   secret_key = "${var.aws_secret_key}"
-#   region = "${var.aws_default_region}"
-}
+# region and creds are set in Terraform Cloud.
+provider "aws" {}
 
 # TODO: elastic IP.
 
