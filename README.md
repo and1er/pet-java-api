@@ -1,6 +1,8 @@
 # pet-java-api
 
-A pet project with API written with Java and auxiliary apps
+A pet project with API written with Java and auxiliary apps.
+
+[![Linters](https://github.com/and1er/pet-java-api/actions/workflows/linting.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/linting.yml)
 
 ## Project Applications
 
