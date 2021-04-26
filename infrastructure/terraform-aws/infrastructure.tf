@@ -60,7 +60,7 @@ resource "aws_eip" "app_host_ip" {
 # SSH access key.
 resource "aws_key_pair" "ssh_access_key" {
   key_name = "host-ssh-access-key"
-  public_key = var.DEPLOY_PUBLIC_KEY
+  public_key = var.INITIAL_PROVISIONING_PUBLIC_KEY
 }
 
 

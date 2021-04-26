@@ -10,8 +10,8 @@ Variables to set there as **Environment Variables** (These variables are set in 
 | ------ | ------ | ------ |
 | **AWS_DEFAULT_REGION** | *A region to create an EC2-instance* | `us-east-1`
 | **AWS_ACCESS_KEY_ID** | *AWS IAM access key* | `XXXXXXXXXXXXXXXX`
-| **AWS_SECRET_ACCESS_KEY** | *AWS IAM secret access key* | `YYYYYYYYYYYYY`
-| **TF_VAR_DEPLOY_PUBLIC_KEY** | *A public key to connect to a created EC2-instance* | The result of `cat ~/.ssh/id_rsa.pub`
+| **AWS_SECRET_ACCESS_KEY** | *AWS IAM secret access key* | `YYYYYYYYYYYYYYYY`
+| **TF_VAR_INITIAL_PROVISIONING_PUBLIC_KEY** | *A public key to connect to a created EC2-instance for initial provisioning* |`ssh-rsa XXXX <comment>`
 
 ## Commands
 

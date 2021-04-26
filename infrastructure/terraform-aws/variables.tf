@@ -1,5 +1,5 @@
 # Environment variables (without 'TF_VAR_' prefix).
-variable "DEPLOY_PUBLIC_KEY" {
+variable "INITIAL_PROVISIONING_PUBLIC_KEY" {
   type = string
 }
 variable "DEPLOY_PRIVATE_KEY_FILE" {

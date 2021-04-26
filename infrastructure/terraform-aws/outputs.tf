@@ -1,7 +1,7 @@
   
-output "DEPLOY_public_key" {
-  description = "A path to SSH public key file"
-  value = var.DEPLOY_PUBLIC_KEY
+output "INITIAL_PROVISIONING_PUBLIC_KEY" {
+  description = "A public SSH key value for initial instance setup"
+  value = var.INITIAL_PROVISIONING_PUBLIC_KEY
 }
 
 output "DEPLOY_ALLOW_SSH_ACCESS_cidr" {
