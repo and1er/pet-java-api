@@ -32,7 +32,12 @@ cd ./app_exporter
 golangci-lint run
 ```
 
-TODO: For Terraform [terrascan](https://github.com/accurics/terrascan) linter.
+For Terraform [terrascan](https://github.com/accurics/terrascan) linter.
+
+```bash
+$ terrascan version
+version: v1.5.0
+```
 
 ### Building
 

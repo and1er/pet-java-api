@@ -72,6 +72,9 @@ resource "aws_instance" "app_host" {
   vpc_security_group_ids = [
     aws_security_group.webserver_group.id
   ]
+  metadata_options {
+    http_tokens = "required"
+  }
   tags = {
     "Name" = "Application host"
     "Role" = "app-host"
