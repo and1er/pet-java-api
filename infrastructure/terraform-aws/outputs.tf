@@ -24,3 +24,12 @@ output "ansible_inventory_file_path" {
 output "ansible_inventory_file_content" {
   value = data.template_file.ansible_inventory_content.rendered
 }
+
+output "app_host_eip_address" {
+  value = aws_eip.app_host_ip
+}
+
+output "app_host_public_ip_address" {
+  value = aws_instance.app_host.public_ip
+  description = "The public IP address of the app_host instance."
+}

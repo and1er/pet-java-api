@@ -1,14 +1,6 @@
 # region and creds are set in Terraform Cloud.
 provider "aws" {}
 
-# TODO: elastic IP.
-
-# --- SSH access key ---
-resource "aws_key_pair" "ssh_access_key" {
-  key_name = "host-ssh-access-key"
-  public_key = var.DEPLOY_PUBLIC_KEY
-}
-
 # --- Security groups ---
 resource "aws_security_group" "webserver_group" {
   name = "Webserver security group"
@@ -43,8 +35,8 @@ resource "aws_security_group" "webserver_group" {
 }
 
 # --- Instances ---
-# Lookup for latest OS image AMIs for any region.
 
+# Lookup for latest OS image AMIs for any region.
 # Ubuntu 20.04 Focal.
 # Tested on "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20201210"
 data "aws_ami" "latest_ubuntu_focal" {
@@ -55,6 +47,22 @@ data "aws_ami" "latest_ubuntu_focal" {
     values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
   }
 }
+
+
+# Static IP-address.
+resource "aws_eip" "app_host_ip" {
+  instance = aws_instance.app_host.id
+  tags = {
+    "AppName" = "pet_java_api"
+  }
+}
+
+# SSH access key.
+resource "aws_key_pair" "ssh_access_key" {
+  key_name = "host-ssh-access-key"
+  public_key = var.DEPLOY_PUBLIC_KEY
+}
+
 
 # Launch an instance.
 resource "aws_instance" "app_host" {
@@ -67,6 +75,7 @@ resource "aws_instance" "app_host" {
   tags = {
     "Name" = "Application host"
     "Role" = "app-host"
+    "AppName" = "pet_java_api"
   }
 }
 
