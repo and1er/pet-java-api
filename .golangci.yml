@@ -1,0 +1,6 @@
+---
+
+linters:
+  disable:
+    - maligned
+    - prealloc
