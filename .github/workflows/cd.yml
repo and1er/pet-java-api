@@ -8,6 +8,8 @@ on:
       - created
       - published
       - released
+  # TODO: remove manual dispatch
+  workflow_dispatch:
 
   # TODO: run after CI jobs
   # workflow_run:
@@ -36,6 +38,10 @@ jobs:
         with:
           terraform_version: ${{ env.TERRAFORM_VERSION }}
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
