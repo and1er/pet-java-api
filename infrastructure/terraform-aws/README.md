@@ -1,8 +1,14 @@
 # Terraform AWS
 
-Using [Terraform Cloud](https://app.terraform.io/).
+## GitHub Actions Secrets
 
-## Variables
+| Variable | Description | Example |
+| ------ | ------ | ------ |
+| **TF_API_TOKEN** | *A token for Terraform Cloud auth* | `XXXXXXXXX`
+
+## Terraform Cloud Variables
+
+Using [Terraform Cloud](https://app.terraform.io/).
 
 Variables to set there as **Environment Variables** (These variables are set in Terraform's shell environment using `export`).
 
@@ -22,6 +28,7 @@ Optional (with defaults)
 | TF_VAR_DEPLOY_ALLOW_SSH_ACCESS_CIDR | *A CIDR for incoming SSH connections* | `0.0.0.0/0`
 | TF_VAR_DEPLOY_PRIVATE_KEY_FILE | *A path to private SSH key file* | `$HOME/.ssh/id_rsa`
 | ANSIBLE_HOST_KEY_CHECKING | *Disable host key verification* | `False`
+
 
 ## Commands
 
