@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - './infrastructure/terraform-aws/*'
+  workflow_dispatch:
 
 jobs:
   terraform_fmt_init_plan:
