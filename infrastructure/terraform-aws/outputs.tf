@@ -17,14 +17,6 @@ output "latest_ubuntu_focal_ami_name" {
   value = data.aws_ami.latest_ubuntu_focal.name
 }
 
-output "ansible_inventory_file_path" {
-  value = var.ansible_inventory_file_path
-}
-
-output "ansible_inventory_file_content" {
-  value = data.template_file.ansible_inventory_content.rendered
-}
-
 output "app_host_eip_address" {
   value = aws_eip.app_host_ip
 }

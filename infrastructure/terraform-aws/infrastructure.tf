@@ -81,20 +81,3 @@ resource "aws_instance" "app_host" {
     "AppName" = "pet_java_api"
   }
 }
-
-# Generate Ansible inventory file.
-data "template_file" "ansible_inventory_content" {
-  template = file("./templates/inventory.ini.tpl")
-  vars = {
-    # Hosts.
-    app_host = aws_instance.app_host.public_ip
-    # Parameters
-    ssh_private_key_file = var.DEPLOY_PRIVATE_KEY_FILE
-    ubuntu_ssh_user = var.ansible_inventory_ubuntu_ssh_user
-    ubuntu_python_interpreter = var.ansible_inventory_ubuntu_python_interpreter
-  }
-}
-resource "local_file" "ansible_inventory_file" {
-  content = data.template_file.ansible_inventory_content.rendered
-  filename = var.ansible_inventory_file_path
-}
