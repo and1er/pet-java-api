@@ -6,6 +6,8 @@ A pet project with API written with Java and auxiliary apps.
 
 [![Terraform CI](https://github.com/and1er/pet-java-api/actions/workflows/terraform-ci.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/terraform-ci.yml)
 
+[![Continuous Delivery](https://github.com/and1er/pet-java-api/actions/workflows/cd.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/cd.yml)
+
 ## Project Applications
 
 ### app_exporter
