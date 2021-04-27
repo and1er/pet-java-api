@@ -48,7 +48,6 @@ data "aws_ami" "latest_ubuntu_focal" {
   }
 }
 
-
 # Static IP-address.
 resource "aws_eip" "app_host_ip" {
   instance = aws_instance.app_host.id
