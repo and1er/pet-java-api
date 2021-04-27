@@ -3,7 +3,7 @@ name: Terraform CI
 on:
   push:
     paths:
-      - './infrastructure/terraform-aws/*'
+      - './infrastructure/terraform-aws/**'
   workflow_dispatch:
 
 jobs:
