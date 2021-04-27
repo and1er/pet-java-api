@@ -1,6 +1,8 @@
 # pet-java-api
 
-A pet project with API written with Java and auxiliary apps
+A pet project with API written with Java and auxiliary apps.
+
+[![Linters](https://github.com/and1er/pet-java-api/actions/workflows/linting.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/linting.yml)
 
 ## Project Applications
 
@@ -28,6 +30,13 @@ For golang
 ```bash
 cd ./app_exporter
 golangci-lint run
+```
+
+For Terraform [terrascan](https://github.com/accurics/terrascan) linter.
+
+```bash
+$ terrascan version
+version: v1.5.0
 ```
 
 ### Building
