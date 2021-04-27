@@ -29,7 +29,6 @@ Optional (with defaults)
 | TF_VAR_DEPLOY_PRIVATE_KEY_FILE | *A path to private SSH key file* | `$HOME/.ssh/id_rsa`
 | ANSIBLE_HOST_KEY_CHECKING | *Disable host key verification* | `False`
 
-
 ## Commands
 
 ```bash
