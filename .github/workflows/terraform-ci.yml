@@ -19,8 +19,11 @@ jobs:
         working-directory: './infrastructure/terraform-aws/'
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: hashicorp/setup-terraform@v1
+      - name: Project Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform v${{ env.TERRAFORM_VERSION }}
+        uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: ${{ env.TERRAFORM_VERSION }}
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
