@@ -22,7 +22,7 @@ jobs:
   docker_build:
     needs: checkstyle_lint
     runs-on: ubuntu-20.04
-    name: Checkstyle lint
+    name: Docker Build
 
     defaults:
       run:
