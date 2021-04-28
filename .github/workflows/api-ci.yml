@@ -2,7 +2,7 @@ name: Java API CI
 on:
   push:
     paths:
-      - 'api_app/**'
+      - 'app_api/**'
 
 jobs:
   checkstyle_lint:
