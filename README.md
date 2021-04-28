@@ -10,9 +10,13 @@ A pet project with API written with Java and auxiliary apps.
 
 ## Project Applications
 
+### app_api
+
+See [app_api/README.md](app_api/README.md).
+
 ### app_exporter
 
-This exposes service metrics in Prometheus format. The application is written in Golang.
+This application exposes service metrics in Prometheus format. The application is written in Golang.
 
 ## Development
 
