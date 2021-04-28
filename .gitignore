@@ -2,9 +2,8 @@
 
 .vscode/
 
-# Secrets
-secrets.sh
-authorized_keys
+# app_api local dev uploads dir
+app_api/uploads/
 
 # --- Java ---
 

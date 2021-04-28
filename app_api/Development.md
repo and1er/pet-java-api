@@ -28,10 +28,5 @@
 ```bash
 cd ./app_api
 ./mvnw clean package
-java -jar target/app_api-0.0.1-SNAPSHOT.jar 
-```
-
-```bash
-$ curl http://localhost:8080/hello?name=Andrei
-Hello Andrei!
+java -jar target/app_api-0.1.0.jar 
 ```

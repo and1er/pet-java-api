@@ -12,7 +12,30 @@ A pet project with API written with Java and auxiliary apps.
 
 ### app_api
 
-See [app_api/README.md](app_api/README.md).
+An API application written in Java using [Spring Boot framework](https://spring.io/)
+
+#### /upload-file
+
+To upload file using curl following request could be used
+
+```bash
+curl -F "file=@/path/to/file.txt" http://127.0.0.1:8080/upload-file
+```
+
+Successfull upload response example
+
+```json
+{"name":"file.txt","uri":"http://127.0.0.1:8080/download/file.txt","type":"text/plain","size":6}
+```
+
+#### /hello
+
+```bash
+$ curl http://localhost:8080/hello?name=Andrei
+Hello Andrei!
+```
+
+See also [app_api/Development.md](app_api/Development.md).
 
 ### app_exporter
 

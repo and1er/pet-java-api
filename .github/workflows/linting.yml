@@ -19,6 +19,8 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_GO: false
+          # TODO: repair linters for Java. Disable due to Maven code errors
+          VALIDATE_JAVA: false
   golangci:
     name: golangci-lint
     runs-on: ubuntu-20.04
