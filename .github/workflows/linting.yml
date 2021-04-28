@@ -23,7 +23,7 @@ jobs:
           # TODO: repair linters for Java. Disable due to Maven code errors
           VALIDATE_JAVA: false
 
-          # Bash checks disabled due to 3rd party app_api/mvnw script errors
+          # Bash checks disabled due to 3rd party app_api/mvnw script errors and no own scripts for now.
           # TODO: if any own bash scripts will be add https://github.com/koalaman/shellcheck
           VALIDATE_BASH: false
           VALIDATE_BASH_EXEC: false
