@@ -2,11 +2,11 @@
 
 A pet project with API written with Java and auxiliary apps.
 
-[![Linters](https://github.com/and1er/pet-java-api/actions/workflows/linting.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/linting.yml)
-
+[![Common Linters](https://github.com/and1er/pet-java-api/actions/workflows/linting.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/linting.yml)
 [![Terraform CI](https://github.com/and1er/pet-java-api/actions/workflows/terraform-ci.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/terraform-ci.yml)
+[![Java API CI](https://github.com/and1er/pet-java-api/actions/workflows/api-ci.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/api-ci.yml)
 
-[![Continuous Delivery](https://github.com/and1er/pet-java-api/actions/workflows/cd.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/cd.yml)
+[![Deploy](https://github.com/and1er/pet-java-api/actions/workflows/cd.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/cd.yml)
 
 ## Project Applications
 

@@ -1,0 +1,20 @@
+name: Java API CI
+on:
+  push:
+    paths:
+      - 'api_app/**'
+
+jobs:
+  checkstyle_lint:
+    runs-on: ubuntu-20.04
+    name: Checkstyle lint
+    steps:
+    - name: Project Checkout
+      uses: actions/checkout@v2
+
+    - name: Run checkstyle
+      uses: nikitasavinov/checkstyle-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        reporter: 'github-pr-check'
+        tool_name: 'testtool'
