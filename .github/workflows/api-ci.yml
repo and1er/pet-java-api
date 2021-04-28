@@ -18,3 +18,20 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         reporter: 'github-pr-check'
         tool_name: 'testtool'
+
+  docker_build:
+    needs: checkstyle_lint
+    runs-on: ubuntu-20.04
+    name: Checkstyle lint
+
+    defaults:
+      run:
+        working-directory: './app_api/'
+
+    steps:
+    - name: Project Checkout
+      uses: actions/checkout@v2
+
+    - name: Docker Build
+      run: |
+        docker build -t app_api:ci .
