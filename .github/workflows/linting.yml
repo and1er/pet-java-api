@@ -19,8 +19,14 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_GO: false
+          
           # TODO: repair linters for Java. Disable due to Maven code errors
           VALIDATE_JAVA: false
+
+          # Bash checks disabled due to 3rd party app_api/mvnw script errors
+          # TODO: if any own bash scripts will be add https://github.com/koalaman/shellcheck
+          VALIDATE_BASH: false
+          VALIDATE_BASH_EXEC: false
   golangci:
     name: golangci-lint
     runs-on: ubuntu-20.04
