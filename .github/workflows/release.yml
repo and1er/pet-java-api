@@ -14,6 +14,8 @@ jobs:
     strategy:
       matrix:
         app_id: [api, exporter]
+    env:
+      BUILD_PLATFORMS: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
     steps:
       - name: Checkout ${{ matrix.app_id }}
         uses: actions/checkout@v2
@@ -34,7 +36,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
         with:
-          platforms: all
+          platforms: ${{ BUILD_PLATFORMS }}
 
       - name: Set up Docker Buildx
         id: buildx
@@ -62,9 +64,10 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: ./app_${{ matrix.app_id }}
           file: ./app_${{ matrix.app_id }}/Dockerfile
-          platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
+          platforms: ${{ BUILD_PLATFORMS }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.prep.outputs.tags }}
+          no-cache: true
           # cache-from: type=local,src=/tmp/.buildx-cache
           # cache-to: type=local,dest=/tmp/.buildx-cache
 
