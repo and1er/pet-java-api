@@ -1,4 +1,25 @@
 ---
+# --- Ansible connection ---
 ansible_user: ubuntu
 ansible_ssh_private_key_file: "{{ lookup('env', 'PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE') or '~/.ssh/id_rsa' }}"
 ansible_python_interpreter: /usr/bin/python3
+
+# --- geerlingguy.firewall ---
+
+firewall_allowed_tcp_ports:
+  - "22"
+  - "80"
+  - "443"
+
+# --- geerlingguy.pip ---
+
+pip_install_packages:
+  - name: docker
+    version: "5.0.0"
+
+# --- geerlingguy.docker ---
+
+docker_install_compose: true
+docker_compose_version: "1.29.1"
+docker_users:
+  - "{{ ansible_user_id }}"

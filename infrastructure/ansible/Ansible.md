@@ -13,6 +13,12 @@
     ```
 
 * Ansible v3+, boto3 package.
+* Install Ansible role and collection requirements
+
+    ```bash
+    ansible-galaxy role install -r requirements.yml
+    ansible-galaxy collection install -r requirements.yml
+    ```
 
 ## Local Runs
 
@@ -22,6 +28,14 @@ Inventory host check
 ansible-inventory -i dynamic-inventory.aws_ec2.yml --graph
 ```
 
+Ad-hoc commands
+
 ```bash
 ansible -i dynamic-inventory.aws_ec2.yml tag_AppName_pet_java_api -m ping
+```
+
+Playbook runs
+
+```bash
+ansible-playbook -i dynamic-inventory.aws_ec2.yml deploy-playbook.yml 
 ```
