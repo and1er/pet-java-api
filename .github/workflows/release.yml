@@ -126,7 +126,7 @@ jobs:
     #   TERRAFORM_VERSION: 0.15.0
     defaults:
       run:
-        working-directory: './infrastructure/'
+        working-directory: './infrastructure/ansible'
 
     steps:
       - name: Project Checkout
@@ -140,7 +140,21 @@ jobs:
       - name: Ansible and Python Packages Installation
         run: |
           python -m pip install --upgrade pip
-          pip install -r ansible/pip-requirements.txt
+          pip install wheel
+          pip install -r pip-requirements.txt
 
       - name: Print Ansible Version
         run: ansible --version
+
+      - name: Run Ansible Playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: deploy-playbook.yml
+          directory: './infrastructure/ansible'
+          requirements: requirements.yml
+          key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+          inventory: dynamic-inventory.aws_ec2.yml
+          # options: |
+          #   --diff
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: False
