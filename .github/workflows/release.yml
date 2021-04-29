@@ -9,16 +9,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  app_api_docker:
+  docker_build_and_push:
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        app_id: [api, exporter]
     steps:
-      - name: Checkout
+      - name: Checkout ${{ matrix.app_id }}
         uses: actions/checkout@v2
 
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=and1er/pja-api
+          DOCKER_IMAGE=and1er/pja-${{ matrix.app_id }}
           VERSION=edge
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/v}
@@ -57,68 +60,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          context: ./app_api
-          file: ./app_api/Dockerfile
-          target: prod
-          platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.prep.outputs.tags }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
-
-  app_exporter_docker:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Prepare
-        id: prep
-        run: |
-          DOCKER_IMAGE=and1er/pja-exporter
-          VERSION=edge
-          if [[ $GITHUB_REF == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/v}
-          fi
-          TAGS="${DOCKER_IMAGE}:${VERSION}"
-          if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-            TAGS="$TAGS,${DOCKER_IMAGE}:latest"
-          fi
-          echo ::set-output name=tags::${TAGS}
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-        with:
-          platforms: all
-
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-
-      - name: Login to DockerHub
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          context: ./app_exporter
-          file: ./app_exporter/Dockerfile
+          context: ./app_${{ matrix.app_id }}
+          file: ./app_${{ matrix.app_id }}/Dockerfile
           target: prod
           platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
           push: ${{ github.event_name != 'pull_request' }}
@@ -134,8 +77,7 @@ jobs:
     name: Terrform Deploy
     runs-on: ubuntu-20.04
     needs:
-      - app_api_docker
-      - app_exporter_docker
+      - docker_build_and_push
 
     env:
       TERRAFORM_VERSION: 0.15.0
