@@ -119,8 +119,8 @@ jobs:
   ansible_deploy:
     name: Ansible Deploy
     runs-on: ubuntu-20.04
-    needs:
-      - terraform_deploy
+    # needs:
+    #   - terraform_deploy
 
     # env:
     #   TERRAFORM_VERSION: 0.15.0
