@@ -1,0 +1,8 @@
+# https://docs.ansible.com/ansible/latest/plugins/inventory.html#inventory-plugins
+
+plugin: amazon.aws.aws_ec2
+keyed_groups:
+# e.g. if tag "AppName=pet_java_api" --> "tag_AppName_pet_java_api"
+  - key: tags.AppName
+    prefix: tag_AppName_
+    separator: ""
