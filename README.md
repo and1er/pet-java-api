@@ -6,7 +6,7 @@ A pet project with API written with Java and auxiliary apps.
 [![Terraform CI](https://github.com/and1er/pet-java-api/actions/workflows/terraform-ci.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/terraform-ci.yml)
 [![Java API CI](https://github.com/and1er/pet-java-api/actions/workflows/api-ci.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/api-ci.yml)
 
-[![Deploy](https://github.com/and1er/pet-java-api/actions/workflows/cd.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/cd.yml)
+[![Release](https://github.com/and1er/pet-java-api/actions/workflows/release.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/release.yml)
 
 ## Project Applications
 
@@ -41,46 +41,12 @@ See also [app_api/Development.md](app_api/Development.md).
 
 This application exposes service metrics in Prometheus format. The application is written in Golang.
 
-## Development
+See also [app_exporter/Development.md](app_exporter/Development.md).
 
-### Requirements
+## GitHub Actions Secrets
 
-* [Golang](https://golang.org/dl/)
-
-    ```bash
-    $ go version
-    go version go1.16.3 linux/amd64
-    ```
-
-* [golangci-lint](https://github.com/golangci/golangci-lint)
-
-### Linters
-
-For golang
-
-```bash
-cd ./app_exporter
-golangci-lint run
-```
-
-For Terraform [terrascan](https://github.com/accurics/terrascan) linter.
-
-```bash
-$ terrascan version
-version: v1.5.0
-```
-
-### Building
-
-```bash
-go install github.com/and1er/pet-java-api/app_exporter
-```
-
-or in project root
-
-```bash
-cd ./app_exporter
-go install .
-```
-
-and then run `app_exporter` from `$GOPATH/bin` dir.
+| Variable | Description | Example |
+| ------ | ------ | ------ |
+| **TF_API_TOKEN** | *A token for Terraform Cloud auth* | `XXXXXXXXX`
+| **DOCKER_USERNAME** | *A Dockerhub login* | `octocat`
+| **DOCKER_PASSWORD** | *A Dockerhub password* | `im-mona`

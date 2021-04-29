@@ -1,11 +1,5 @@
 # Terraform AWS
 
-## GitHub Actions Secrets
-
-| Variable | Description | Example |
-| ------ | ------ | ------ |
-| **TF_API_TOKEN** | *A token for Terraform Cloud auth* | `XXXXXXXXX`
-
 ## Terraform Cloud Variables
 
 Using [Terraform Cloud](https://app.terraform.io/).

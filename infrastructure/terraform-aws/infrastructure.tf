@@ -3,16 +3,16 @@ provider "aws" {}
 
 # --- Security groups ---
 resource "aws_security_group" "webserver_group" {
-  name = "Webserver security group"
+  name        = "Webserver security group"
   description = "Basic security rules for webservers."
 
   dynamic "ingress" {
     for_each = ["80", "443"]
     content {
       description = "Incoming webserver tcp connections."
-      from_port = ingress.value
-      to_port = ingress.value
-      protocol = "tcp"
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
     }
   }
@@ -20,17 +20,17 @@ resource "aws_security_group" "webserver_group" {
   ingress {
     description = "Incoming SSH connections"
     cidr_blocks = [var.DEPLOY_ALLOW_SSH_ACCESS_CIDR]
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
   }
 
   egress {
     description = "Allow all output traffic"
     cidr_blocks = ["0.0.0.0/0"]
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
   }
 }
 
@@ -58,16 +58,16 @@ resource "aws_eip" "app_host_ip" {
 
 # SSH access key.
 resource "aws_key_pair" "ssh_access_key" {
-  key_name = "host-ssh-access-key"
+  key_name   = "host-ssh-access-key"
   public_key = var.INITIAL_PROVISIONING_PUBLIC_KEY
 }
 
 
 # Launch an instance.
 resource "aws_instance" "app_host" {
-  ami = data.aws_ami.latest_ubuntu_focal.id
+  ami           = data.aws_ami.latest_ubuntu_focal.id
   instance_type = "t3.micro"
-  key_name = "host-ssh-access-key"
+  key_name      = "host-ssh-access-key"
   vpc_security_group_ids = [
     aws_security_group.webserver_group.id
   ]
@@ -75,8 +75,8 @@ resource "aws_instance" "app_host" {
     http_tokens = "required"
   }
   tags = {
-    "Name" = "Application host"
-    "Role" = "app-host"
+    "Name"    = "Application host"
+    "Role"    = "app-host"
     "AppName" = "pet_java_api"
   }
 }
