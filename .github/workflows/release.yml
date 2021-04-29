@@ -24,7 +24,7 @@ jobs:
         id: prep
         run: |
           DOCKER_IMAGE=and1er/pja-${{ matrix.app_id }}
-          VERSION=edge
+          VERSION=dev
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/v}
           fi
