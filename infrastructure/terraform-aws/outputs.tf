@@ -1,12 +1,12 @@
-  
+
 output "INITIAL_PROVISIONING_PUBLIC_KEY" {
   description = "A public SSH key value for initial instance setup"
-  value = var.INITIAL_PROVISIONING_PUBLIC_KEY
+  value       = var.INITIAL_PROVISIONING_PUBLIC_KEY
 }
 
 output "DEPLOY_ALLOW_SSH_ACCESS_cidr" {
   description = "For security group rule"
-  value = var.DEPLOY_ALLOW_SSH_ACCESS_CIDR
+  value       = var.DEPLOY_ALLOW_SSH_ACCESS_CIDR
 }
 
 output "latest_ubuntu_focal_ami_id" {
@@ -22,6 +22,6 @@ output "app_host_eip_address" {
 }
 
 output "app_host_public_ip_address" {
-  value = aws_instance.app_host.public_ip
+  value       = aws_instance.app_host.public_ip
   description = "The public IP address of the app_host instance."
 }
