@@ -156,7 +156,6 @@ jobs:
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check -diff
-        # continue-on-error: true
 
       - name: Terraform Init
         id: init
@@ -169,8 +168,6 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
-        # continue-on-error: true
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
-
