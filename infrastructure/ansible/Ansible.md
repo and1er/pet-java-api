@@ -13,6 +13,11 @@
     ```
 
 * Ansible v3+, boto3 package.
+
+    ```bash
+    pip install -r pip-requirements.txt
+    ```
+
 * Install Ansible role and collection requirements
 
     ```bash
