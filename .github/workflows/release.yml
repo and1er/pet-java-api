@@ -63,6 +63,9 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           context: ./app_${{ matrix.app_id }}
+          build-args:
+            - name: progress
+              value: string
           file: ./app_${{ matrix.app_id }}/Dockerfile
           platforms: ${{ env.BUILD_PLATFORMS }}
           push: ${{ github.event_name != 'pull_request' }}
