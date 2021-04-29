@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'infrastructure/terraform-aws/**'
+      - '.github/workflows/terraform-ci.yml'
   workflow_dispatch:
 
 jobs:
@@ -31,7 +32,7 @@ jobs:
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
-        continue-on-error: true
+        # continue-on-error: true
 
       - name: Terraform Init
         id: init
@@ -44,7 +45,7 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
-        continue-on-error: true
+        # continue-on-error: true
 
       - uses: actions/github-script@0.9.0
         if: github.event_name == 'pull_request'

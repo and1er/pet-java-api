@@ -84,3 +84,11 @@ go install .
 ```
 
 and then run `app_exporter` from `$GOPATH/bin` dir.
+
+## GitHub Actions Secrets
+
+| Variable | Description | Example |
+| ------ | ------ | ------ |
+| **TF_API_TOKEN** | *A token for Terraform Cloud auth* | `XXXXXXXXX`
+| **DOCKER_USERNAME** | *A Dockerhub login* | `octocat`
+| **DOCKER_PASSWORD** | *A Dockerhub password* | `im-mona`
