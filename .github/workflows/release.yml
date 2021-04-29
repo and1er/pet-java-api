@@ -15,7 +15,8 @@ jobs:
       matrix:
         app_id: [api, exporter]
     env:
-      BUILD_PLATFORMS: linux/amd64,linux/arm64
+      BUILD_PLATFORMS: linux/amd64
+      # BUILD_PLATFORMS: linux/amd64,linux/arm64
     steps:
       - name: Checkout ${{ matrix.app_id }}
         uses: actions/checkout@v2
