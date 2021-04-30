@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'app_api/**'
+      - '.github/workflows/api-ci.yml'
 
 jobs:
   checkstyle_lint:
@@ -27,11 +28,45 @@ jobs:
     defaults:
       run:
         working-directory: './app_api/'
-
+    env:
+      BUILD_PLATFORMS: linux/amd64
     steps:
-    - name: Project Checkout
+    - name: Project checkout
       uses: actions/checkout@v2
 
-    - name: Docker Build
-      run: |
-        docker build -t app_api:ci .
+      - name: Prepare
+        id: prep
+        run: |
+          DOCKER_IMAGE=and1er/pja-api
+          VERSION=ci
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        with:
+          platforms: ${{ env.BUILD_PLATFORMS }}
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-api-${{ github.sha }}
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          context: ./app_api
+          file: ./app_api/Dockerfile
+          platforms: ${{ env.BUILD_PLATFORMS }}
+          push: false
+          tags: ${{ steps.prep.outputs.tags }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
