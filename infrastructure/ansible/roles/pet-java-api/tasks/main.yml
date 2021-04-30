@@ -1,4 +1,23 @@
 ---
+- name: Deploy NGINX basic auth credentials files.
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0440
+    owner: www-data
+    group: www-data
+  loop:
+    - src: "{{ pja_src_nginx_api_htpasswd_file }}"
+      dest: "{{ pja_dest_nginx_api_htpasswd_file }}"
+    - src: "{{ pja_src_nginx_exporter_htpasswd_file }}"
+      dest: "{{ pja_dest_nginx_exporter_htpasswd_file }}"
+  loop_control:
+    label: "{{ item.dest }}"
+  become: yes
+  no_log: yes
+  notify: reload nginx
+
+
 - name: Create project root dir "{{ pja_root_dir }}"
   file:
     path: "{{ pja_root_dir }}"

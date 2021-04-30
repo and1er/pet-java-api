@@ -10,8 +10,15 @@ pja_server_name: pja.alosenkov.site
 pja_root_dir: "/var/www/{{ pja_server_name }}"
 pja_user: "{{ ansible_user }}"
 pja_group: "{{ ansible_user }}"
+
 pja_src_docker_compose_file_path: ./../docker-compose.yml
 pja_dest_docker_compose_file_path: "{{ pja_root_dir }}/docker-compose.yml"
+
+pja_src_nginx_api_htpasswd_file: ./roles/pet-java-api/files/nginx-api-htpasswd
+pja_dest_nginx_api_htpasswd_file: /etc/nginx/.api-htpasswd
+
+pja_src_nginx_exporter_htpasswd_file: ./roles/pet-java-api/files/nginx-exporter-htpasswd
+pja_dest_nginx_exporter_htpasswd_file: /etc/nginx/.exporter-htpasswd
 
 # --- geerlingguy.firewall ---
 
@@ -62,6 +69,10 @@ nginx_vhosts:
     extra_parameters: |
       location / {
           # app_api
+
+          auth_basic "API is restricted, auth is needed";
+          auth_basic_user_file {{ pja_dest_nginx_api_htpasswd_file }};
+
           proxy_http_version 1.1;
           proxy_pass http://127.0.0.1:5000/;
           proxy_set_header X-Real-IP $remote_addr;
@@ -71,6 +82,10 @@ nginx_vhosts:
       }
       location /hello {
           # app_exporter
+
+          auth_basic "Exporter mertics are provided with credentials only";
+          auth_basic_user_file {{ pja_dest_nginx_exporter_htpasswd_file }};
+
           proxy_http_version 1.1;
           proxy_pass http://127.0.0.1:6000/;
           proxy_set_header X-Real-IP $remote_addr;

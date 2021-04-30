@@ -1,0 +1,24 @@
+---
+# reload nginx handler
+- name: Check nginx configs
+  shell: "/usr/sbin/nginx -t"
+  register: nginx_config_status
+  become: yes
+
+- name: nginx test status
+  debug:
+    msg: "{{ nginx_config_status.rc }}"
+  when: not ansible_check_mode
+
+- name: nginx test warnings and errors
+  debug:
+    msg: "{{ nginx_config_status.stderr }}"
+  when: not ansible_check_mode
+
+- name: Service nginx reload and enable as a service
+  systemd:
+    name: nginx
+    state: reloaded
+    enabled: yes
+  when: not ansible_check_mode and nginx_config_status.rc == 0
+  become: yes

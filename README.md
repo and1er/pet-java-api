@@ -19,8 +19,10 @@ An API application written in Java using [Spring Boot framework](https://spring.
 To upload file using curl following request could be used
 
 ```bash
-curl -F "file=@/path/to/file.txt" https://pja.alosenkov.site/upload-file
+curl -F "file=@/path/to/file.txt" https://user:pass@pja.alosenkov.site/upload-file
 ```
+
+where `user:pass` is an API restriction credentials.
 
 Successfull upload response example
 
@@ -41,6 +43,12 @@ See also [app_api/Development.md](app_api/Development.md).
 
 This application exposes service metrics in Prometheus format. The application is written in Golang.
 
+Metrics are exposed only by `user:pass` credentials provided in request:
+
+```bash
+curl https://user:pass@pja.alosenkov.site/hello
+```
+
 See also [app_exporter/Development.md](app_exporter/Development.md).
 
 ## GitHub Actions Secrets
@@ -51,5 +59,6 @@ See also [app_exporter/Development.md](app_exporter/Development.md).
 | **DOCKER_USERNAME** | *A Dockerhub login* | `octocat`
 | **DOCKER_PASSWORD** | *A Dockerhub password* | `im-mona`
 | **DEPLOY_SSH_PRIVATE_KEY** | *SSH private key content for app deploy* | `-----BEGIN OPENSSH PRIVATE KEY----- ...`
+| **PJA_ANSIBLE_VAULT_PASS** | *Ansible Vault decryption password* | `secret-vault-pass`
 | **AWS_ACCESS_KEY_ID** | *AWS IAM access key* | `XXXX`
 | **AWS_SECRET_ACCESS_KEY** | *AWS IAM secret access key* | `YYYYY`

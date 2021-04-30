@@ -5,6 +5,8 @@
 # app_api local dev uploads dir
 app_api/uploads/
 
+vault-pass.txt
+
 # --- Java ---
 
 # Compiled class file
