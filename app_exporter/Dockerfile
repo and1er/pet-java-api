@@ -17,7 +17,7 @@ COPY --from=builder /app /home/appuser/app
 WORKDIR /home/appuser/app
 
 # Since running as a non-root user, port bindings < 1024 is not possible
-EXPOSE 8090
+EXPOSE 8080
 EXPOSE 8443
 
 CMD ["./app_exporter"]
