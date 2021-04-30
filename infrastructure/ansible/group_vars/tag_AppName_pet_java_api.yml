@@ -25,6 +25,8 @@ firewall_allowed_tcp_ports:
 pip_install_packages:
   - name: docker
     version: "5.0.0"
+  - name: docker-compose
+    version: "1.29.1"
 
 # --- geerlingguy.docker ---
 
