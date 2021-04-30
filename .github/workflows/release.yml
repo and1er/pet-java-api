@@ -129,7 +129,7 @@ jobs:
         working-directory: './infrastructure/ansible'
 
     steps:
-      - name: Project Checkout
+      - name: Project checkout
         uses: actions/checkout@v2
 
       - name: Set up Python 3.9
@@ -137,7 +137,7 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Ansible and Python Packages Installation
+      - name: Ansible and python packages installation
         run: |
           python -m pip install --upgrade pip
           pip install wheel
@@ -146,14 +146,36 @@ jobs:
       - name: Print Ansible Version
         run: ansible --version
 
-      - name: Run Ansible Playbook
+      - name: Install Ansible roles and collections
+        run: |
+          ansible-galaxy role install -r requirements.yml
+          ansible-galaxy collection install -r requirements.yml
+
+      - name: Prepare private SSH deploy key
+        run: |
+          mkdir ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Run Ansible playbook
+        run: ansible-playbook -i dynamic-inventory.aws_ec2.yml deploy-playbook.yml
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: False
+
+      - name: TEST Run Ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
           playbook: deploy-playbook.yml
           directory: './infrastructure/ansible'
           requirements: requirements.yml
           key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
-          inventory: dynamic-inventory.aws_ec2.yml
+          inventory: |
+            plugin: amazon.aws.aws_ec2
+            keyed_groups:
+            # e.g. if tag "AppName=pet_java_api" --> "tag_AppName_pet_java_api"
+              - key: tags.AppName
+                prefix: tag_AppName_
+                separator: ""
           # options: |
           #   --diff
         env:
