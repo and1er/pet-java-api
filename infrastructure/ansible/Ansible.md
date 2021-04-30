@@ -42,6 +42,6 @@ ansible -i dynamic-inventory.aws_ec2.yml tag_AppName_pet_java_api -m ping
 Playbook runs
 
 ```bash
-ansible-playbook -i dynamic-inventory.aws_ec2.yml host-provisioning-playbook.yml 
+ansible-playbook -i dynamic-inventory.aws_ec2.yml host-provisioning-playbook.yml
 ansible-playbook -i dynamic-inventory.aws_ec2.yml app-deploy-playbook.yml --vault-password-file vault-pass.txt
 ```

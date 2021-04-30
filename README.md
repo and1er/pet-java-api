@@ -1,43 +1,42 @@
 # pet-java-api
 
-A pet project with API written with Java and auxiliary apps.
-
 [![Common Linters](https://github.com/and1er/pet-java-api/actions/workflows/linting.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/linting.yml)
 [![Terraform CI](https://github.com/and1er/pet-java-api/actions/workflows/terraform-ci.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/terraform-ci.yml)
 [![Java API CI](https://github.com/and1er/pet-java-api/actions/workflows/api-ci.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/api-ci.yml)
 
 [![Release](https://github.com/and1er/pet-java-api/actions/workflows/release.yml/badge.svg)](https://github.com/and1er/pet-java-api/actions/workflows/release.yml)
 
+A pet project with API written with Java and auxiliary apps.
+
+Available here [https://pja.alosenkov.site/](https://pja.alosenkov.site/).
+
 ## Project Applications
 
 ### app_api
 
-An API application written in Java using [Spring Boot framework](https://spring.io/)
+An API application written in Java using [Spring Boot framework](https://spring.io/). See also [app_api/Development.md](app_api/Development.md).
 
-#### /upload-file
+* [https://pja.alosenkov.site/](https://pja.alosenkov.site/) (index homepage). Shows a web page with a manual file upload form. Also shows already uploaded files.
+* [https://pja.alosenkov.site/upload-file](https://pja.alosenkov.site/upload-file): API endpoint to post the file using HTTP request, e.g. using **curl** tool like this
 
-To upload file using curl following request could be used
+    ```bash
+    curl -F "file=@/path/to/file.txt" https://user:pass@pja.alosenkov.site/upload-file
+    ```
 
-```bash
-curl -F "file=@/path/to/file.txt" https://user:pass@pja.alosenkov.site/upload-file
-```
+    where `user:pass` is a credentials pair because API access is restricted.
 
-where `user:pass` is an API restriction credentials.
+    Successfull upload response example
 
-Successfull upload response example
+    ```json
+    {"name":"file.txt","uri":"https://pja.alosenkov.site/download/file.txt","type":"text/plain","size":6}
+    ```
 
-```json
-{"name":"file.txt","uri":"https://pja.alosenkov.site/download/file.txt","type":"text/plain","size":6}
-```
+* [https://pja.alosenkov.site/hello](https://pja.alosenkov.site/hello): test endpoint, to be removed
 
-#### /hello
-
-```bash
-$ curl http://localhost:8080/hello?name=Andrei
-Hello Andrei!
-```
-
-See also [app_api/Development.md](app_api/Development.md).
+    ```bash
+    $ curl https://pja.alosenkov.site/hello?name=Andrei
+    Hello Andrei!
+    ```
 
 ### app_exporter
 
