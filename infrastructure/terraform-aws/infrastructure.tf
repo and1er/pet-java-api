@@ -72,7 +72,8 @@ resource "aws_instance" "app_host" {
     aws_security_group.webserver_group.id
   ]
   metadata_options {
-    http_tokens = "required"
+    http_endpoint = "enabled"
+    http_tokens   = "required"
   }
   tags = {
     "Name"    = "Application host"

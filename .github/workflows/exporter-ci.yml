@@ -1,33 +1,30 @@
-name: Java API CI
+name: Golang Exporter CI
 on:
   push:
     paths:
-      - 'app_api/**'
-      - '.github/workflows/api-ci.yml'
+      - 'app_exporter/**'
+      - '.github/workflows/exporter-ci.yml'
 
 jobs:
-  checkstyle_lint:
+  golangci_lint:
+    name: golangci_lint
     runs-on: ubuntu-20.04
-    name: Checkstyle lint
     steps:
-    - name: Project Checkout
-      uses: actions/checkout@v2
-
-    - name: Run checkstyle
-      uses: nikitasavinov/checkstyle-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        reporter: 'github-pr-check'
-        tool_name: 'testtool'
+      - uses: actions/checkout@v2
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: v1.39.0
+          working-directory: ./app_exporter
 
   docker_build:
-    needs: checkstyle_lint
+    needs: golangci_lint
     runs-on: ubuntu-20.04
     name: Docker Build
 
     defaults:
       run:
-        working-directory: './app_api/'
+        working-directory: './app_exporter/'
     env:
       BUILD_PLATFORMS: linux/amd64
     steps:
@@ -37,7 +34,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=and1er/pja-api
+          DOCKER_IMAGE=and1er/pja-exporter
           VERSION=ci
 
       - name: Set up QEMU
@@ -53,15 +50,15 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-api-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-exporter-${{ github.sha }}
 
       - name: Build only
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          context: ./app_api
-          file: ./app_api/Dockerfile
+          context: ./app_exporter
+          file: ./app_exporter/Dockerfile
           platforms: ${{ env.BUILD_PLATFORMS }}
           push: false
           tags: ${{ steps.prep.outputs.tags }}

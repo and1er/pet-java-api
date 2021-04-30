@@ -27,15 +27,3 @@ jobs:
           # TODO: if any own bash scripts will be add https://github.com/koalaman/shellcheck
           VALIDATE_BASH: false
           VALIDATE_BASH_EXEC: false
-  golangci:
-    name: golangci-lint
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
-        with:
-          version: v1.39.0
-
-          # Optional: working directory, useful for monorepos
-          working-directory: ./app_exporter
