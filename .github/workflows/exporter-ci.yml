@@ -37,6 +37,7 @@ jobs:
           DOCKER_IMAGE=and1er/pja-exporter
           VERSION=ci
           TAGS="${DOCKER_IMAGE}:${VERSION}"
+          echo ::set-output name=tags::${TAGS}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
