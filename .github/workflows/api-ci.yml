@@ -31,8 +31,8 @@ jobs:
     env:
       BUILD_PLATFORMS: linux/amd64
     steps:
-    - name: Project checkout
-      uses: actions/checkout@v2
+      - name: Project checkout
+        uses: actions/checkout@v2
 
       - name: Prepare
         id: prep
