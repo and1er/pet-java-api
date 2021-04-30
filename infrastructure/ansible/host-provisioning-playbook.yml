@@ -1,4 +1,4 @@
-- name: Deploy Pet Java API Application.
+- name: Host Provisioning.
   hosts: tag_AppName_pet_java_api
   become: yes
 
@@ -13,8 +13,3 @@
     - name: geerlingguy.pip
     - name: geerlingguy.docker
     - name: geerlingguy.git
-      tags: git
-
-    - name: pet-java-api
-      tags: deploy
-    
