@@ -128,8 +128,8 @@ jobs:
       run:
         working-directory: './infrastructure/ansible'
     env:
-      PJA_ANSIBLE_SSH_PRIVATE_KEY_DIR: ~/.ssh
-      PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE: ~/.ssh/id_rsa
+      PJA_ANSIBLE_SSH_PRIVATE_KEY_DIR: "$HOME/.ssh"
+      PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE: "$HOME/.ssh/id_rsa"
     steps:
       - name: Project checkout
         uses: actions/checkout@v2
@@ -155,7 +155,7 @@ jobs:
 
       - name: Prepare private SSH deploy key
         run: |
-          mkdir -p "$PJA_ANSIBLE_SSH_PRIVATE_KEY_DIR"
+          mkdir -pv "$PJA_ANSIBLE_SSH_PRIVATE_KEY_DIR"
           echo "${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}" > "$PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE"
           chmod 600 "$PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE"
 
