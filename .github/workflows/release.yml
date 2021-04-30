@@ -128,8 +128,8 @@ jobs:
     env:
       PJA_ANSIBLE_SSH_PRIVATE_KEY_DIR: "$HOME/.ssh"
       PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE: "$HOME/.ssh/id_rsa"
-      PJA_ANSIBLE_VAULT_PASS_DIR: "$HOME/.ansible"
-      PJA_ANSIBLE_VAULT_PASS_FILE: "$HOME/.ansible/vault-pass.txt"
+      PJA_ANSIBLE_VAULT_PASS_DIR: "./.ansible"
+      PJA_ANSIBLE_VAULT_PASS_FILE: "./.ansible/vault-pass.txt"
     steps:
       - name: Project checkout
         uses: actions/checkout@v2
