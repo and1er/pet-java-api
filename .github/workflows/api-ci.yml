@@ -55,7 +55,7 @@ jobs:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-api-${{ github.sha }}
 
-      - name: Build and push
+      - name: Build only
         id: docker_build
         uses: docker/build-push-action@v2
         with:
