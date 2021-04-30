@@ -1,0 +1,28 @@
+- name: Host Provisioning.
+  hosts: tag_AppName_pet_java_api
+  become: yes
+
+  pre_tasks:
+    - name: Update apt cache if needed.
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+  roles:
+    - name: geerlingguy.firewall
+      tags: firewall
+
+    - name: geerlingguy.pip
+      tags: pip
+
+    - name: geerlingguy.docker
+      tags: docker
+
+    - name: geerlingguy.git
+      tags: git
+
+    - name: geerlingguy.certbot
+      tags: certbot
+
+    - name: geerlingguy.nginx
+      tags: nginx

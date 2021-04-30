@@ -1,0 +1,3 @@
+---
+- name: reload nginx
+  include_tasks: handlers/reload_nginx.yml

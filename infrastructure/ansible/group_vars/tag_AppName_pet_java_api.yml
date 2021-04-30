@@ -1,8 +1,24 @@
 ---
 # --- Ansible connection ---
 ansible_user: ubuntu
-ansible_ssh_private_key_file: "{{ lookup('env', 'PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE') or '$HOME/.ssh/id_rsa' }}"
+ansible_ssh_private_key_file: "{{ lookup('env', 'PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE') or '~/.ssh/id_rsa' }}"
 ansible_python_interpreter: /usr/bin/python3
+
+# --- Pet Java Application ---
+
+pja_server_name: pja.alosenkov.site
+pja_root_dir: "/var/www/{{ pja_server_name }}"
+pja_user: "{{ ansible_user }}"
+pja_group: "{{ ansible_user }}"
+
+pja_src_docker_compose_file_path: ./../docker-compose.yml
+pja_dest_docker_compose_file_path: "{{ pja_root_dir }}/docker-compose.yml"
+
+pja_src_nginx_api_htpasswd_file: ./roles/pet-java-api/files/nginx-api-htpasswd
+pja_dest_nginx_api_htpasswd_file: /etc/nginx/.api-htpasswd
+
+pja_src_nginx_exporter_htpasswd_file: ./roles/pet-java-api/files/nginx-exporter-htpasswd
+pja_dest_nginx_exporter_htpasswd_file: /etc/nginx/.exporter-htpasswd
 
 # --- geerlingguy.firewall ---
 
@@ -16,10 +32,91 @@ firewall_allowed_tcp_ports:
 pip_install_packages:
   - name: docker
     version: "5.0.0"
+  - name: docker-compose
+    version: "1.29.1"
 
 # --- geerlingguy.docker ---
 
 docker_install_compose: true
 docker_compose_version: "1.29.1"
 docker_users:
-  - "{{ ansible_user_id }}"
+  - "{{ ansible_user }}"
+
+# --- geerlingguy.certbot ---
+certbot_install_method: package
+certbot_keep_updated: true
+
+# --- geerlingguy.nginx ---
+nginx_remove_default_vhost: true
+nginx_server_tokens: "off"
+nginx_client_max_body_size: "10m"
+nginx_ppa_use: true
+nginx_ppa_version: stable
+nginx_vhosts:
+  - listen: "80 default_server"
+    server_name: "_"
+    state: "present"
+    template: "{{ nginx_vhost_template }}"
+    extra_parameters: |
+      return 302 https://{{ pja_server_name }}$request_uri;
+    filename: "default-{{ pja_server_name }}.conf"
+  - listen: "443 ssl http2"
+    server_name: "{{ pja_server_name }}"
+    state: "present"
+    template: "{{ nginx_vhost_template }}"
+    filename: "{{ pja_server_name }}.conf"
+    # https://ssl-config.mozilla.org/#server=nginx&version=1.17.7&config=modern&openssl=1.1.1d&guideline=5.6
+    extra_parameters: |
+      location / {
+          # app_api index
+
+          proxy_http_version 1.1;
+          proxy_pass http://127.0.0.1:5000/;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header REMOTE_ADDR $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_redirect off;
+      }
+      location ~* ^(upload|download) {
+          # app_api file manipulations
+
+          auth_basic "API is restricted, auth is needed";
+          auth_basic_user_file {{ pja_dest_nginx_api_htpasswd_file }};
+
+          proxy_http_version 1.1;
+          proxy_pass http://127.0.0.1:5000;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header REMOTE_ADDR $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_redirect off;
+      }
+      location /hello {
+          # app_exporter
+
+          auth_basic "Exporter mertics are provided with credentials only";
+          auth_basic_user_file {{ pja_dest_nginx_exporter_htpasswd_file }};
+
+          proxy_http_version 1.1;
+          proxy_pass http://127.0.0.1:6000/;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header REMOTE_ADDR $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_redirect off;
+      }
+
+      ssl_certificate /etc/letsencrypt/live/{{ pja_server_name }}/fullchain.pem;
+      ssl_certificate_key /etc/letsencrypt/live/{{ pja_server_name }}/privkey.pem;
+      ssl_session_timeout 1d;
+      ssl_session_cache shared:MozSSL:10m;  # about 40000 sessions
+      ssl_session_tickets off;
+
+      # modern configuration
+      ssl_protocols TLSv1.3;
+      ssl_prefer_server_ciphers off;
+
+      # HSTS (ngx_http_headers_module is required) (63072000 seconds)
+      add_header Strict-Transport-Security "max-age=63072000" always;
+
+      # OCSP stapling
+      ssl_stapling on;
+      ssl_stapling_verify on;

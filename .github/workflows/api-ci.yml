@@ -39,6 +39,8 @@ jobs:
         run: |
           DOCKER_IMAGE=and1er/pja-api
           VERSION=ci
+          TAGS="${DOCKER_IMAGE}:${VERSION}"
+          echo ::set-output name=tags::${TAGS}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -55,7 +57,14 @@ jobs:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-api-${{ github.sha }}
 
-      - name: Build only
+      - name: Login to DockerHub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
         with:
@@ -63,7 +72,7 @@ jobs:
           context: ./app_api
           file: ./app_api/Dockerfile
           platforms: ${{ env.BUILD_PLATFORMS }}
-          push: false
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.prep.outputs.tags }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
