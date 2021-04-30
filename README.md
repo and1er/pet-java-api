@@ -53,4 +53,3 @@ See also [app_exporter/Development.md](app_exporter/Development.md).
 | **DEPLOY_SSH_PRIVATE_KEY** | *SSH private key content for app deploy* | `-----BEGIN OPENSSH PRIVATE KEY----- ...`
 | **AWS_ACCESS_KEY_ID** | *AWS IAM access key* | `XXXX`
 | **AWS_SECRET_ACCESS_KEY** | *AWS IAM secret access key* | `YYYYY`
-| **PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE** | *A path to private SSH key file** | `$HOME/.ssh/id_rsa`

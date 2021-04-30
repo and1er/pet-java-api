@@ -127,7 +127,9 @@ jobs:
     defaults:
       run:
         working-directory: './infrastructure/ansible'
-
+    env:
+      PJA_ANSIBLE_SSH_PRIVATE_KEY_DIR: ~/.ssh
+      PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE: ~/.ssh/id_rsa
     steps:
       - name: Project checkout
         uses: actions/checkout@v2
@@ -153,9 +155,9 @@ jobs:
 
       - name: Prepare private SSH deploy key
         run: |
-          mkdir ~/.ssh
-          echo "${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}" > "${{ secrets.PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE}}"
-          chmod 600 "${{ secrets.PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE}}"
+          mkdir -p "$PJA_ANSIBLE_SSH_PRIVATE_KEY_DIR"
+          echo "${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}" > "$PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE"
+          chmod 600 "$PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE"
 
       - name: Run Ansible playbook
         run: ansible-playbook -i dynamic-inventory.aws_ec2.yml deploy-playbook.yml
@@ -163,4 +165,3 @@ jobs:
           ANSIBLE_HOST_KEY_CHECKING: False
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE: ${{ secrets.PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE }}
