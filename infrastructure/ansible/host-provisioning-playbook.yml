@@ -13,3 +13,4 @@
     - name: geerlingguy.pip
     - name: geerlingguy.docker
     - name: geerlingguy.git
+    - name: geerlingguy.certbot

@@ -23,3 +23,7 @@ docker_install_compose: true
 docker_compose_version: "1.29.1"
 docker_users:
   - "{{ ansible_user_id }}"
+
+# --- geerlingguy.certbot ---
+certbot_install_method: package
+certbot_keep_updated: true
