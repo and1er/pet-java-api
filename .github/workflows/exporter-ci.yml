@@ -6,7 +6,7 @@ on:
       - '.github/workflows/exporter-ci.yml'
 
 jobs:
-  golangci:
+  golangci_lint:
     name: golangci_lint
     runs-on: ubuntu-20.04
     steps:
