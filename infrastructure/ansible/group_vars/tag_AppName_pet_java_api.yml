@@ -4,6 +4,10 @@ ansible_user: ubuntu
 ansible_ssh_private_key_file: "{{ lookup('env', 'PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE') or '~/.ssh/id_rsa' }}"
 ansible_python_interpreter: /usr/bin/python3
 
+# --- Pet Java Application
+
+pja_server_name: pja.alosenkov.site
+
 # --- geerlingguy.firewall ---
 
 firewall_allowed_tcp_ports:
@@ -27,3 +31,45 @@ docker_users:
 # --- geerlingguy.certbot ---
 certbot_install_method: package
 certbot_keep_updated: true
+
+# --- geerlingguy.nginx ---
+nginx_remove_default_vhost: true
+nginx_server_tokens: "off"
+nginx_client_max_body_size: "10m"
+nginx_ppa_use: true
+nginx_ppa_version: stable
+nginx_vhosts:
+  - listen: "80 default_server"
+    server_name: "_"
+    state: "present"
+    template: "{{ nginx_vhost_template }}"
+    extra_parameters: |
+      return 302 https://{{ pja_server_name }}$request_uri;
+    filename: "default-{{ pja_server_name }}.conf"
+  - listen: "443 ssl http2"
+    server_name: "{{ pja_server_name }}"
+    state: "present"
+    template: "{{ nginx_vhost_template }}"
+    filename: "{{ pja_server_name }}.conf"
+    # https://ssl-config.mozilla.org/#server=nginx&version=1.17.7&config=modern&openssl=1.1.1d&guideline=5.6
+    extra_parameters: |
+      location / {
+          return 200 "OK\n";
+      }
+
+      ssl_certificate /etc/letsencrypt/live/{{ pja_server_name }}/fullchain.pem;
+      ssl_certificate_key /etc/letsencrypt/live/{{ pja_server_name }}/privkey.pem;
+      ssl_session_timeout 1d;
+      ssl_session_cache shared:MozSSL:10m;  # about 40000 sessions
+      ssl_session_tickets off;
+
+      # modern configuration
+      ssl_protocols TLSv1.3;
+      ssl_prefer_server_ciphers off;
+
+      # HSTS (ngx_http_headers_module is required) (63072000 seconds)
+      add_header Strict-Transport-Security "max-age=63072000" always;
+
+      # OCSP stapling
+      ssl_stapling on;
+      ssl_stapling_verify on;

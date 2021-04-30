@@ -10,7 +10,19 @@
 
   roles:
     - name: geerlingguy.firewall
+      tags: firewall
+
     - name: geerlingguy.pip
+      tags: pip
+
     - name: geerlingguy.docker
+      tags: docker
+
     - name: geerlingguy.git
+      tags: git
+
     - name: geerlingguy.certbot
+      tags: certbot
+
+    - name: geerlingguy.nginx
+      tags: nginx
