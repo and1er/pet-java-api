@@ -12,6 +12,8 @@
     - name: geerlingguy.firewall
     - name: geerlingguy.pip
     - name: geerlingguy.docker
+    - name: geerlingguy.git
+      tags: git
 
     - name: pet-java-api
       tags: deploy
