@@ -19,13 +19,13 @@ An API application written in Java using [Spring Boot framework](https://spring.
 To upload file using curl following request could be used
 
 ```bash
-curl -F "file=@/path/to/file.txt" http://127.0.0.1:8080/upload-file
+curl -F "file=@/path/to/file.txt" https://pja.alosenkov.site/upload-file
 ```
 
 Successfull upload response example
 
 ```json
-{"name":"file.txt","uri":"http://127.0.0.1:8080/download/file.txt","type":"text/plain","size":6}
+{"name":"file.txt","uri":"https://pja.alosenkov.site/download/file.txt","type":"text/plain","size":6}
 ```
 
 #### /hello
