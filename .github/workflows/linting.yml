@@ -27,3 +27,6 @@ jobs:
           # TODO: if any own bash scripts will be add https://github.com/koalaman/shellcheck
           VALIDATE_BASH: false
           VALIDATE_BASH_EXEC: false
+
+          # TODO: it was broken (at least 1st of May 2021), check and return it back.
+          VALIDATE_TERRAFORM_TERRASCAN: false
