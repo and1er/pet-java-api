@@ -1,6 +1,6 @@
 - name: Deploy Pet Java API Application.
   hosts: tag_AppName_pet_java_api
-  become: yes
+  become: no
 
   pre_tasks:
 

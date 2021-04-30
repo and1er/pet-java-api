@@ -1,2 +1,22 @@
 ---
-- ping:
+- name: Create project root dir "{{ pja_root_dir }}"
+  file:
+    path: "{{ pja_root_dir }}"
+    state: directory
+    owner: "{{ pja_user }}"
+    group: "{{ pja_group }}"
+  become: yes
+
+- name: Copy project docker-compose.yml file.
+  copy:
+    src: "{{ pja_src_docker_compose_file_path }}"
+    dest: "{{ pja_dest_docker_compose_file_path }}"
+
+- name: Create and start services using "{{ pja_dest_docker_compose_file_path }}".
+  community.docker.docker_compose:
+    project_src: "{{ pja_root_dir }}"
+  register: output
+  become: no
+
+- ansible.builtin.debug:
+    var: output

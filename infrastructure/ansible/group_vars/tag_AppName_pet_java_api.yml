@@ -4,9 +4,14 @@ ansible_user: ubuntu
 ansible_ssh_private_key_file: "{{ lookup('env', 'PJA_ANSIBLE_SSH_PRIVATE_KEY_FILE') or '~/.ssh/id_rsa' }}"
 ansible_python_interpreter: /usr/bin/python3
 
-# --- Pet Java Application
+# --- Pet Java Application ---
 
 pja_server_name: pja.alosenkov.site
+pja_root_dir: "/var/www/{{ pja_server_name }}"
+pja_user: "{{ ansible_user }}"
+pja_group: "{{ ansible_user }}"
+pja_src_docker_compose_file_path: ./../docker-compose.yml
+pja_dest_docker_compose_file_path: "{{ pja_root_dir }}/docker-compose.yml"
 
 # --- geerlingguy.firewall ---
 
@@ -26,7 +31,7 @@ pip_install_packages:
 docker_install_compose: true
 docker_compose_version: "1.29.1"
 docker_users:
-  - "{{ ansible_user_id }}"
+  - "{{ ansible_user }}"
 
 # --- geerlingguy.certbot ---
 certbot_install_method: package
