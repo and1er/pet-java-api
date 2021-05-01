@@ -31,24 +31,15 @@ An API application written in Java using [Spring Boot framework](https://spring.
     {"name":"file.txt","uri":"https://pja.alosenkov.site/download/file.txt","type":"text/plain","size":6}
     ```
 
-* [https://pja.alosenkov.site/hello](https://pja.alosenkov.site/hello): test endpoint, to be removed
-
-    ```bash
-    $ curl https://pja.alosenkov.site/hello?name=Andrei
-    Hello Andrei!
-    ```
-
 ### app_exporter
 
-This application exposes service metrics in Prometheus format. The application is written in Golang.
+This application exposes service metrics in Prometheus format. The application is written in Golang. See also [app_exporter/Development.md](app_exporter/Development.md).
 
 Metrics are exposed only by `user:pass` credentials provided in request:
 
 ```bash
-curl https://user:pass@pja.alosenkov.site/hello
+curl https://user:pass@pja.alosenkov.site/metrics
 ```
-
-See also [app_exporter/Development.md](app_exporter/Development.md).
 
 ## GitHub Actions Secrets
 
