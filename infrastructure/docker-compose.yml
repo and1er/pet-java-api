@@ -15,7 +15,7 @@ services:
       # - ...:/etc/letsencrypt
 
   app_api:
-    image: and1er/pja-api:0.2.0
+    image: and1er/pja-api:latest
     container_name: pja-api
     restart: unless-stopped
     ports:
@@ -26,7 +26,7 @@ services:
       - /tmp/pja-api:/app/uploads
 
   app_exporter:
-    image: and1er/pja-exporter:0.2.0
+    image: and1er/pja-exporter:latest
     container_name: pja-exporter
     restart: unless-stopped
     ports:
