@@ -8,13 +8,16 @@
 
 A pet project with API written with Java and auxiliary apps.
 
-Available here [https://pja.alosenkov.site/](https://pja.alosenkov.site/).
+Available here [https://pja.alosenkov.site/](https://pja.alosenkov.site/)
 
 ## Project Applications
 
 ### app_api
 
-An API application written in Java using [Spring Boot framework](https://spring.io/). See also [app_api/Development.md](app_api/Development.md).
+An API application written in Java using [Spring Boot framework](https://spring.io/).
+Based on [Uploading and downloading files using Spring Boot REST API](https://attacomsian.com/blog/uploading-files-spring-boot) publication by [Atta](https://twitter.com/attacomsian).
+
+See also [app_api/Development.md](app_api/Development.md).
 
 * [https://pja.alosenkov.site/](https://pja.alosenkov.site/) (index homepage). Shows a web page with a manual file upload form. Also shows already uploaded files.
 * [https://pja.alosenkov.site/upload-file](https://pja.alosenkov.site/upload-file): API endpoint to post the file using HTTP request, e.g. using **curl** tool like this
