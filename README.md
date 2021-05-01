@@ -8,13 +8,16 @@
 
 A pet project with API written with Java and auxiliary apps.
 
-Available here [https://pja.alosenkov.site/](https://pja.alosenkov.site/).
+Available here [https://pja.alosenkov.site/](https://pja.alosenkov.site/)
 
 ## Project Applications
 
 ### app_api
 
-An API application written in Java using [Spring Boot framework](https://spring.io/). See also [app_api/Development.md](app_api/Development.md).
+An API application written in Java using [Spring Boot framework](https://spring.io/).
+Based on [Uploading and downloading files using Spring Boot REST API](https://attacomsian.com/blog/uploading-files-spring-boot) publication by [Atta](https://twitter.com/attacomsian).
+
+See also [app_api/Development.md](app_api/Development.md).
 
 * [https://pja.alosenkov.site/](https://pja.alosenkov.site/) (index homepage). Shows a web page with a manual file upload form. Also shows already uploaded files.
 * [https://pja.alosenkov.site/upload-file](https://pja.alosenkov.site/upload-file): API endpoint to post the file using HTTP request, e.g. using **curl** tool like this
@@ -31,24 +34,15 @@ An API application written in Java using [Spring Boot framework](https://spring.
     {"name":"file.txt","uri":"https://pja.alosenkov.site/download/file.txt","type":"text/plain","size":6}
     ```
 
-* [https://pja.alosenkov.site/hello](https://pja.alosenkov.site/hello): test endpoint, to be removed
-
-    ```bash
-    $ curl https://pja.alosenkov.site/hello?name=Andrei
-    Hello Andrei!
-    ```
-
 ### app_exporter
 
-This application exposes service metrics in Prometheus format. The application is written in Golang.
+This application exposes service metrics in Prometheus format. The application is written in Golang. See also [app_exporter/Development.md](app_exporter/Development.md).
 
 Metrics are exposed only by `user:pass` credentials provided in request:
 
 ```bash
-curl https://user:pass@pja.alosenkov.site/hello
+curl https://user:pass@pja.alosenkov.site/metrics
 ```
-
-See also [app_exporter/Development.md](app_exporter/Development.md).
 
 ## GitHub Actions Secrets
 
