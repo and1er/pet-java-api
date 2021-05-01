@@ -44,7 +44,7 @@
         <h2>All Uploaded Files:</h2>
         <ul>
             <li th:each="file : ${files}">
-                <a th:href="${file}" target="_blank" th:text="${file}"></a>
+                <code th:text="${file}"></code>
             </li>
         </ul>
     </div> <!-- /container -->

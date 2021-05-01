@@ -29,10 +29,11 @@ public class FileController {
 	public String listAllFiles(Model model) {
 
 		model.addAttribute("files", storageService.loadAll().map(
-				path -> ServletUriComponentsBuilder.fromCurrentContextPath()
-						.path("/download/")
-						.path(path.getFileName().toString())
-						.toUriString())
+				path -> path.getFileName().toString())
+				// path -> ServletUriComponentsBuilder.fromCurrentContextPath()
+				// 		.path("/download/")
+				// 		.path(path.getFileName().toString())
+				// 		.toUriString())
 				.collect(Collectors.toList()));
 
 		return "listFiles";
