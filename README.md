@@ -11,6 +11,17 @@ A pet project with API written with Java and auxiliary apps.
 
 Available here [https://pja.alosenkov.site/](https://pja.alosenkov.site/)
 
+## Instruments
+
+* Java v11 (OpenJDK) with [Spring Boot framework](https://spring.io/).
+* Golang v1.16.3;
+* [GitHub Actions](https://github.com/features/actions);
+* [Terraform Cloud](https://app.terraform.io/session), [see also](infrastructure/terraform-aws/README.md)
+* Terraform v0.15.0;
+* Docker v20.10.6;
+* Ansible v3.3 (base 2.10.8);
+* NGINX 1.18.0.
+
 ## Project Applications
 
 ### app_api
