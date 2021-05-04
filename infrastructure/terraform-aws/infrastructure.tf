@@ -71,6 +71,11 @@ resource "aws_instance" "app_host" {
   vpc_security_group_ids = [
     aws_security_group.webserver_group.id
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
   metadata_options {
     http_endpoint = "enabled"
     http_tokens   = "required"
